@@ -1,13 +1,15 @@
 import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from '../src/components/router/router'
-import { createStore } from 'vuex'
+import router from '../src/components/router/router';
+import { createStore } from 'vuex';
+import VueCookies from 'vue-cookies';
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { sweetAlert } from 'sweetalert2/dist/sweetalert2';
 import axios from 'axios';
+
 
 const app = createApp(App)
 const store = createStore({
@@ -39,11 +41,11 @@ const store = createStore({
         }   
     },
   })
-  
-
+app.use(VueCookies);
 app.use(router)
 app.use(VueSweetalert2)
 app.mount('#app')
 app.use(store)
+
 
   

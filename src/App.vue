@@ -4,12 +4,14 @@
   <button class="dropbtn">Route TO</button>
   <div class="dropdown-content">
     <RouterLink :to="'/'" class="nav-link">Home</RouterLink>
-    <RouterLink :to="'/req'" class="nav-link">Phones</RouterLink>
+    <RouterLink :to="'/req'" class="nav-link">Passwords</RouterLink>
   </div>
 </div>
-  <reqView/>
   <RouterView />
+  <reqView/>
 </header>
+<Login/>
+<reqView/>
 </template>
 <style>
 .dropbtn {

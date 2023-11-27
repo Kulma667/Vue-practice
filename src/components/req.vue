@@ -1,12 +1,12 @@
 <template>
     <div id="app">
-      <h2>
+      <!-- <h2>
         <p>{{ geter }}</p>
-      </h2>
+      </h2> -->
          <p>
              <input v-model="inputValue" placeholder="Кинь фрукт">
              <button @click="checkAndAdd">Есть ли такой?</button>
-             <button @click="create()">Get for phone</button>
+             <button @click="create()">Получить пароль</button>
          </p>
          <ul>
            <li v-for="(matchedElements, index) in matchedElements">
@@ -25,7 +25,7 @@ export default {
   computed:mapGetters(['geter']),
   data(){ return{
     inputValue: '',
-    predefinedArray: ['apple', 'banana', 'cherry', 'date'],
+    predefinedArray: ['apple', 'banana', 'cherry', 'date', 'qwrety'],
     matchedElements: [],  
     buttonClick: 0,
   }},
@@ -33,18 +33,28 @@ export default {
   {
     await this.$store.dispatch('getreq')
   },
-  created(){
-      this.buttonClick += 1
-      fetch('https://dummyjson.com/products/')
-        .then((response) => {
-          return response.json();
-          }) 
-        .then((data) => {
-          this.matchedElements.push(data.products[this.buttonClick].title.toLowerCase());
-          this.predefinedArray.push(data.products[this.buttonClick].title.toLowerCase());
-          //console.log(this.predefinedArray)
-          })
-    },
+  // created(){
+  //     this.buttonClick += 1
+  //     fetch('https://dummyjson.com/products/')
+  //       .then((response) => {
+  //         return response.json();
+  //         }) 
+  //       .then((data) => {
+  //         this.matchedElements.push(data.products[this.buttonClick].title.toLowerCase());
+  //         this.predefinedArray.push(data.products[this.buttonClick].title.toLowerCase());
+  //         //console.log(this.predefinedArray)
+  //         })
+  //         fetch('http://127.0.0.1:8000/api/Users')
+  //       .then((response) => {
+  //         return response.json();
+  //         }) 
+  //       .then((data) => {
+  //         this.matchedElements.push(data[this.buttonClick].Name.toLowerCase());
+  //         this.predefinedArray.push(data[this.buttonClick].Name.toLowerCase());
+  //         //console.log(this.predefinedArray)
+  //         })
+
+  //   },
   methods: {
     clearMatchedElements() {
       this.matchedElements = [];
@@ -89,18 +99,17 @@ export default {
     ),
     this.removeElement(index) 
   }
-  alert("было действие")
 })
     },
     create(){
       this.buttonClick += 1
-      fetch('https://dummyjson.com/products/')
+      fetch('http://127.0.0.1:8000/api/Users')
         .then((response) => {
           return response.json();
           }) 
         .then((data) => {
-          this.matchedElements.push(data.products[this.buttonClick].title.toLowerCase());
-          this.predefinedArray.push(data.products[this.buttonClick].title.toLowerCase());
+          this.matchedElements.push(data[this.buttonClick].Password.toLowerCase());
+          this.predefinedArray.push(data[this.buttonClick].Password.toLowerCase());
           //console.log(this.predefinedArray)
           })
     },
@@ -121,10 +130,28 @@ export default {
   if(text)
   {
     Swal.fire('u changed text')
+    axios
+      .get("http://127.0.0.1:8000/api/ChangePass?act=ChangePassword&id=" + String(index+2)+"&password="+String(text))
+      .then(function (response) {
+        console.log(response);
+      });
     this.matchedElements[index] = text;
     this.predefinedArray[index] = text;
   }    
 }
 },
+    async login()
+    {
+      const { value: text } = await Swal.fire({
+      input: 'textarea',
+      input: 'textarea',
+      inputLabel: 'Message',
+      inputPlaceholder: 'Login and Password',
+      inputAttributes: {
+      'aria-label': 'Login and Password'
+   },
+  showCancelButton: false
+})
+    }
 }
 </script>
